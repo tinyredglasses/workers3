@@ -3,7 +3,7 @@ package cloudflare
 import (
 	"syscall/js"
 
-	"github.com/syumai/workers/cloudflare/internal/cfruntimecontext"
+	"github.com/tinyredglasses/workers3/cloudflare/internal/cfruntimecontext"
 )
 
 // Getenv gets a value of an environment variable.

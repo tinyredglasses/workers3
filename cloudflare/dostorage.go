@@ -2,11 +2,11 @@ package cloudflare
 
 import (
 	"fmt"
-	"github.com/syumai/workers/internal/jsutil"
+	"github.com/tinyredglasses/workers3/internal/jsutil"
 	"io"
 	"syscall/js"
 
-	"github.com/syumai/workers/cloudflare/internal/cfruntimecontext"
+	"github.com/tinyredglasses/workers3/cloudflare/internal/cfruntimecontext"
 )
 
 // DurableObjectStorage represents interface of Durable Object's Storage instance.

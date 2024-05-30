@@ -3,8 +3,8 @@ package adhoc
 import (
 	"context"
 	"fmt"
-	"github.com/syumai/workers/internal/jsutil"
-	"github.com/syumai/workers/internal/runtimecontext"
+	"github.com/tinyredglasses/workers3/internal/jsutil"
+	"github.com/tinyredglasses/workers3/internal/runtimecontext"
 	"syscall/js"
 )
 

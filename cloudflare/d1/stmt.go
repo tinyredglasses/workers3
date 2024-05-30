@@ -6,7 +6,7 @@ import (
 	"errors"
 	"syscall/js"
 
-	"github.com/syumai/workers/internal/jsutil"
+	"github.com/tinyredglasses/workers3/internal/jsutil"
 )
 
 type stmt struct {
