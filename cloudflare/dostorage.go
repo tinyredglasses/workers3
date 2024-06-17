@@ -104,7 +104,7 @@ func (opts *DurableObjectPutOptions) toJS() js.Value {
 	return obj
 }
 
-func (d *DurableObjectStorage) Get(key string, opts *DurableObjectStorageGetOptions) (string, error) {
+func (d *DurableObjectStorage) Get(key string, opts DurableObjectStorageGetOptions) (string, error) {
 	p := d.instance.Call("get", key, opts.toJS("text"))
 	v, err := jsutil.AwaitPromise(p)
 	if err != nil {
@@ -113,7 +113,7 @@ func (d *DurableObjectStorage) Get(key string, opts *DurableObjectStorageGetOpti
 	return v.String(), nil
 }
 
-func (d *DurableObjectStorage) GetReader(key string, opts *DurableObjectStorageGetOptions) (io.Reader, error) {
+func (d *DurableObjectStorage) GetReader(key string, opts DurableObjectStorageGetOptions) (io.Reader, error) {
 	p := d.instance.Call("get", key, opts.toJS("stream"))
 	v, err := jsutil.AwaitPromise(p)
 	if err != nil {
@@ -124,7 +124,7 @@ func (d *DurableObjectStorage) GetReader(key string, opts *DurableObjectStorageG
 
 // PutString puts string value into KV with key.
 //   - if a network error happens, returns error.
-func (d *DurableObjectStorage) PutString(key string, value string, opts *DurableObjectPutOptions) error {
+func (d *DurableObjectStorage) PutString(key string, value string, opts DurableObjectPutOptions) error {
 	p := d.instance.Call("put", key, value, opts.toJS())
 	_, err := jsutil.AwaitPromise(p)
 	if err != nil {
