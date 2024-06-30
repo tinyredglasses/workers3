@@ -14,25 +14,25 @@ type DurableObjectStorage struct {
 }
 
 type DurableObjectStorageGetOptions struct {
-	allowConcurrency bool
-	noCache          bool
+	AllowConcurrency bool
+	NoCache          bool
 }
 
 type DurableObjectListOptions struct {
-	start            string
-	startAfter       string
-	end              string
-	prefix           string
-	reverse          bool
-	limit            int
-	allowConcurrency bool
-	noCache          bool
+	Start            string
+	StartAfter       string
+	End              string
+	Prefix           string
+	Reverse          bool
+	Limit            int
+	AllowConcurrency bool
+	NoCache          bool
 }
 
 type DurableObjectPutDeleteOptions struct {
-	allowUnconfirmed bool
-	allowConcurrency bool
-	noCache          bool
+	AllowUnconfirmed bool
+	AllowConcurrency bool
+	NoCache          bool
 }
 
 func (opts *DurableObjectStorageGetOptions) toJS(type_ string) js.Value {
@@ -41,11 +41,11 @@ func (opts *DurableObjectStorageGetOptions) toJS(type_ string) js.Value {
 	if opts == nil {
 		return obj
 	}
-	if opts.allowConcurrency {
-		obj.Set("allowConcurrency", opts.allowConcurrency)
+	if opts.AllowConcurrency {
+		obj.Set("allowConcurrency", opts.AllowConcurrency)
 	}
-	if opts.noCache {
-		obj.Set("noCache", opts.noCache)
+	if opts.NoCache {
+		obj.Set("noCache", opts.NoCache)
 	}
 	return obj
 }
@@ -56,29 +56,29 @@ func (opts *DurableObjectListOptions) toJS(type_ string) js.Value {
 	if opts == nil {
 		return obj
 	}
-	if opts.start != "" {
-		obj.Set("start", opts.start)
+	if opts.Start != "" {
+		obj.Set("start", opts.Start)
 	}
-	if opts.startAfter != "" {
-		obj.Set("startAfter", opts.startAfter)
+	if opts.StartAfter != "" {
+		obj.Set("startAfter", opts.StartAfter)
 	}
-	if opts.end != "" {
-		obj.Set("end", opts.end)
+	if opts.End != "" {
+		obj.Set("end", opts.End)
 	}
-	if opts.prefix != "" {
-		obj.Set("prefix", opts.prefix)
+	if opts.Prefix != "" {
+		obj.Set("prefix", opts.Prefix)
 	}
-	if opts.reverse {
-		obj.Set("reverse", opts.reverse)
+	if opts.Reverse {
+		obj.Set("reverse", opts.Reverse)
 	}
-	if opts.limit != 0 {
-		obj.Set("limit", opts.limit)
+	if opts.Limit != 0 {
+		obj.Set("limit", opts.Limit)
 	}
-	if opts.allowConcurrency {
-		obj.Set("allowConcurrency", opts.noCache)
+	if opts.AllowConcurrency {
+		obj.Set("allowConcurrency", opts.AllowConcurrency)
 	}
-	if opts.noCache {
-		obj.Set("noCache", opts.noCache)
+	if opts.NoCache {
+		obj.Set("noCache", opts.NoCache)
 	}
 	return obj
 }
@@ -90,15 +90,15 @@ func (opts *DurableObjectPutDeleteOptions) toJS() js.Value {
 
 	obj := jsutil.NewObject()
 
-	if opts.allowUnconfirmed {
-		obj.Set("allowUnconfirmed", opts.allowUnconfirmed)
+	if opts.AllowUnconfirmed {
+		obj.Set("allowUnconfirmed", opts.AllowUnconfirmed)
 	}
 
-	if opts.allowConcurrency {
-		obj.Set("allowConcurrency", opts.allowConcurrency)
+	if opts.AllowConcurrency {
+		obj.Set("allowConcurrency", opts.AllowConcurrency)
 	}
-	if opts.noCache {
-		obj.Set("noCache", opts.noCache)
+	if opts.NoCache {
+		obj.Set("noCache", opts.NoCache)
 	}
 	return obj
 }
