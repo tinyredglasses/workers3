@@ -29,6 +29,9 @@ type DurableObjectListOptions struct {
 	NoCache          bool
 }
 
+type DurableObjectListResponse struct {
+}
+
 type DurableObjectPutDeleteOptions struct {
 	AllowUnconfirmed bool
 	AllowConcurrency bool
@@ -112,13 +115,13 @@ func (d *DurableObjectStorage) Get(key string, opts DurableObjectStorageGetOptio
 	return v.String(), nil
 }
 
-func (d *DurableObjectStorage) List(opts DurableObjectListOptions) (string, error) {
+func (d *DurableObjectStorage) List(opts DurableObjectListOptions) (map[string]string, error) {
 	p := d.instance.Call("list", opts.toJS("text"))
 	v, err := jsutil.AwaitPromise(p)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	return v.String(), nil
+	return jsutil.StrRecordToMap(v), nil
 }
 
 func (d *DurableObjectStorage) DeleteAll(opts DurableObjectPutDeleteOptions) (string, error) {
