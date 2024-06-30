@@ -3,7 +3,6 @@ package cloudflare
 import (
 	"fmt"
 	"github.com/tinyredglasses/workers3/internal/jsutil"
-	"io"
 	"syscall/js"
 
 	"github.com/tinyredglasses/workers3/cloudflare/internal/cfruntimecontext"
@@ -30,7 +29,7 @@ type DurableObjectListOptions struct {
 	noCache          bool
 }
 
-type DurableObjectPutOptions struct {
+type DurableObjectPutDeleteOptions struct {
 	allowUnconfirmed bool
 	allowConcurrency bool
 	noCache          bool
@@ -84,7 +83,7 @@ func (opts *DurableObjectListOptions) toJS(type_ string) js.Value {
 	return obj
 }
 
-func (opts *DurableObjectPutOptions) toJS() js.Value {
+func (opts *DurableObjectPutDeleteOptions) toJS() js.Value {
 	if opts == nil {
 		return js.Undefined()
 	}
@@ -113,8 +112,8 @@ func (d *DurableObjectStorage) Get(key string, opts DurableObjectStorageGetOptio
 	return v.String(), nil
 }
 
-func (d *DurableObjectStorage) List(key string, opts DurableObjectListOptions) (string, error) {
-	p := d.instance.Call("list", key, opts.toJS("text"))
+func (d *DurableObjectStorage) List(opts DurableObjectListOptions) (string, error) {
+	p := d.instance.Call("list", opts.toJS("text"))
 	v, err := jsutil.AwaitPromise(p)
 	if err != nil {
 		return "", err
@@ -122,18 +121,18 @@ func (d *DurableObjectStorage) List(key string, opts DurableObjectListOptions) (
 	return v.String(), nil
 }
 
-func (d *DurableObjectStorage) GetReader(key string, opts DurableObjectStorageGetOptions) (io.Reader, error) {
-	p := d.instance.Call("get", key, opts.toJS("stream"))
+func (d *DurableObjectStorage) DeleteAll(opts DurableObjectPutDeleteOptions) (string, error) {
+	p := d.instance.Call("deleteAll", opts.toJS())
 	v, err := jsutil.AwaitPromise(p)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	return jsutil.ConvertReadableStreamToReadCloser(v), nil
+	return v.String(), nil
 }
 
 // PutString puts string value into KV with key.
 //   - if a network error happens, returns error.
-func (d *DurableObjectStorage) PutString(key string, value string, opts DurableObjectPutOptions) error {
+func (d *DurableObjectStorage) PutString(key string, value string, opts DurableObjectPutDeleteOptions) error {
 	p := d.instance.Call("put", key, value, opts.toJS())
 	_, err := jsutil.AwaitPromise(p)
 	if err != nil {
@@ -142,7 +141,7 @@ func (d *DurableObjectStorage) PutString(key string, value string, opts DurableO
 	return nil
 }
 
-func (d *DurableObjectStorage) PutStrings(entries map[string]string, opts DurableObjectPutOptions) error {
+func (d *DurableObjectStorage) PutStrings(entries map[string]string, opts DurableObjectPutDeleteOptions) error {
 	val := jsutil.MapToStrRecord(entries)
 
 	p := d.instance.Call("put", val, opts.toJS())
