@@ -113,6 +113,15 @@ func (d *DurableObjectStorage) Get(key string, opts DurableObjectStorageGetOptio
 	return v.String(), nil
 }
 
+func (d *DurableObjectStorage) List(key string, opts DurableObjectListOptions) (string, error) {
+	p := d.instance.Call("list", key, opts.toJS("text"))
+	v, err := jsutil.AwaitPromise(p)
+	if err != nil {
+		return "", err
+	}
+	return v.String(), nil
+}
+
 func (d *DurableObjectStorage) GetReader(key string, opts DurableObjectStorageGetOptions) (io.Reader, error) {
 	p := d.instance.Call("get", key, opts.toJS("stream"))
 	v, err := jsutil.AwaitPromise(p)
@@ -126,6 +135,17 @@ func (d *DurableObjectStorage) GetReader(key string, opts DurableObjectStorageGe
 //   - if a network error happens, returns error.
 func (d *DurableObjectStorage) PutString(key string, value string, opts DurableObjectPutOptions) error {
 	p := d.instance.Call("put", key, value, opts.toJS())
+	_, err := jsutil.AwaitPromise(p)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (d *DurableObjectStorage) PutStrings(entries map[string]string, opts DurableObjectPutOptions) error {
+	val := jsutil.MapToStrRecord(entries)
+
+	p := d.instance.Call("put", val, opts.toJS())
 	_, err := jsutil.AwaitPromise(p)
 	if err != nil {
 		return err

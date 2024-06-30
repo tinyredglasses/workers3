@@ -115,3 +115,14 @@ func DateToTime(v js.Value) (time.Time, error) {
 func TimeToDate(t time.Time) js.Value {
 	return DateClass.New(t.UnixMilli())
 }
+
+// StrRecordToMap converts JavaScript side's Record<string, string> into map[string]string.
+func MapToStrRecord(m map[string]string) js.Value {
+	obj := NewObject()
+
+	for k, v := range m {
+		obj.Set(k, v)
+	}
+
+	return obj
+}
