@@ -115,6 +115,15 @@ func (d *DurableObjectStorage) Get(key string, opts DurableObjectStorageGetOptio
 	return v.String(), nil
 }
 
+func (d *DurableObjectStorage) GetMany(keys []string, opts DurableObjectStorageGetOptions) (map[string]string, error) {
+	p := d.instance.Call("get", keys, opts.toJS("text"))
+	v, err := jsutil.AwaitPromise(p)
+	if err != nil {
+		return nil, err
+	}
+	return jsutil.StrRecordToMap(v), nil
+}
+
 func (d *DurableObjectStorage) List(opts DurableObjectListOptions) (map[string]string, error) {
 	p := d.instance.Call("list", opts.toJS("text"))
 	v, err := jsutil.AwaitPromise(p)
