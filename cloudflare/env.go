@@ -19,3 +19,15 @@ func Getenv(name string) string {
 func GetBinding(name string) js.Value {
 	return cfruntimecontext.MustGetRuntimeContextEnv().Get(name)
 }
+
+func GetRuntimeContextValue(ctx context.Context, name string) js.Value {
+	return cfruntimecontext.MustGetRuntimeContextValue("client")
+}
+
+func GetCtx(ctx context.Context, name string) js.Value {
+	return cfruntimecontext.MustGetExecutionContext(ctx).Get(name)
+}
+
+func GetTriggerObject(ctx context.Context) js.Value {
+	return runtimecontext.MustExtractTriggerObj(ctx)
+}
