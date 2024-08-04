@@ -184,7 +184,7 @@ func NewIncomingProperties(ctx context.Context) (*IncomingProperties, error) {
 		Latitude:                 jsutil.MaybeString(cf.Get("latitude")),
 		TLSCipher:                jsutil.MaybeString(cf.Get("tlsCipher")),
 		Continent:                jsutil.MaybeString(cf.Get("continent")),
-		Asn:                      cf.Get("asn").Int(),
+		Asn:                      jsutil.MaybeInt(cf.Get("asn")),
 		ClientAcceptEncoding:     jsutil.MaybeString(cf.Get("clientAcceptEncoding")),
 		Country:                  jsutil.MaybeString(cf.Get("country")),
 		TLSClientAuth:            NewIncomingTLSClientAuth(cf.Get("tlsClientAuth")),
