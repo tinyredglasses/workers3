@@ -23,7 +23,7 @@ func GetBinding(name string) js.Value {
 }
 
 func GetRuntimeContextValue(name string) js.Value {
-	return cfruntimecontext.MustGetRuntimeContextValue("client")
+	return cfruntimecontext.MustGetRuntimeContextValue(name)
 }
 
 func GetCtx(name string) js.Value {
