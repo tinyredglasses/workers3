@@ -1,9 +1,11 @@
 package cloudflare
 
 import (
+	"context"
 	"syscall/js"
 
 	"github.com/tinyredglasses/workers3/cloudflare/internal/cfruntimecontext"
+	"github.com/tinyredglasses/workers3/internal/runtimecontext"
 )
 
 // Getenv gets a value of an environment variable.
@@ -20,12 +22,12 @@ func GetBinding(name string) js.Value {
 	return cfruntimecontext.MustGetRuntimeContextEnv().Get(name)
 }
 
-func GetRuntimeContextValue(ctx context.Context, name string) js.Value {
+func GetRuntimeContextValue(name string) js.Value {
 	return cfruntimecontext.MustGetRuntimeContextValue("client")
 }
 
-func GetCtx(ctx context.Context, name string) js.Value {
-	return cfruntimecontext.MustGetExecutionContext(ctx).Get(name)
+func GetCtx(name string) js.Value {
+	return cfruntimecontext.MustGetExecutionContext().Get(name)
 }
 
 func GetTriggerObject(ctx context.Context) js.Value {
