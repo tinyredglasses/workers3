@@ -60,31 +60,30 @@ func (opts *DurableObjectListOptions) toJS(type_ string) js.Value {
 	if opts == nil {
 		return obj
 	}
-	// if opts.Start != "" {
-	// 	obj.Set("start", opts.Start)
-	// }
-	// if opts.StartAfter != "" {
-	// 	obj.Set("startAfter", opts.StartAfter)
-	// }
-	// if opts.End != "" {
-	// 	obj.Set("end", opts.End)
-	// }
-	// if opts.Prefix != "" {
-	// 	obj.Set("prefix", opts.Prefix)
-	// }
-	// if opts.Reverse {
-	// 	obj.Set("reverse", opts.Reverse)
-	// }
-	// if opts.Limit != 0 {
-	// 	obj.Set("limit", opts.Limit)
-	// }
-	// if opts.AllowConcurrency {
-	// 	obj.Set("allowConcurrency", opts.AllowConcurrency)
-	// }
-	// if opts.NoCache {
-	// 	obj.Set("noCache", opts.NoCache)
-	// }
-
+	if opts.Start != "" {
+		obj.Set("start", opts.Start)
+	}
+	if opts.StartAfter != "" {
+		obj.Set("startAfter", opts.StartAfter)
+	}
+	if opts.End != "" {
+		obj.Set("end", opts.End)
+	}
+	if opts.Prefix != "" {
+		obj.Set("prefix", opts.Prefix)
+	}
+	if opts.Reverse {
+		obj.Set("reverse", opts.Reverse)
+	}
+	if opts.Limit != 0 {
+		obj.Set("limit", opts.Limit)
+	}
+	if opts.AllowConcurrency {
+		obj.Set("allowConcurrency", opts.AllowConcurrency)
+	}
+	if opts.NoCache {
+		obj.Set("noCache", opts.NoCache)
+	}
 	return obj
 }
 
@@ -123,7 +122,7 @@ func (d *DurableObjectStorage) GetMany(keys []string, opts DurableObjectStorageG
 	if err != nil {
 		return nil, err
 	}
-	return jsutil.StrRecordToMap(v), nil
+	return jsutil.MapToMap(v), nil
 }
 
 func (d *DurableObjectStorage) List(opts DurableObjectListOptions) (map[string]string, error) {
@@ -132,7 +131,7 @@ func (d *DurableObjectStorage) List(opts DurableObjectListOptions) (map[string]s
 	if err != nil {
 		return nil, err
 	}
-	return jsutil.StrRecordToMap(v), nil
+	return jsutil.MapToMap(v), nil
 }
 
 func (d *DurableObjectStorage) DeleteAll(opts DurableObjectPutDeleteOptions) (string, error) {

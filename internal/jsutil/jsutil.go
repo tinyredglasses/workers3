@@ -93,6 +93,28 @@ func StrRecordToMap(v js.Value) map[string]string {
 	return result
 }
 
+func MapToMap(v js.Value) map[string]string {
+	fmt.Println("MapToMap:" + v.String())
+	if v.IsUndefined() || v.IsNull() {
+		return map[string]string{}
+	}
+	iterator := v.Call("entries")
+	// entriesLen := entries.Get("length").Int()
+	// fmt.Println("MapToMap Length:" + strconv.Itoa(entriesLen))
+
+	result := make(map[string]string)
+	for {
+		next := iterator.Call("next")
+		if next.Get("done").Bool() {
+			break
+		}
+		value := iterator.Get("value")
+		result[value.Index(0).String()] = value.Index(1).String()
+
+	}
+	return result
+}
+
 // MaybeString returns string value of given JavaScript value or returns nil if the value is undefined.
 func MaybeString(v js.Value) string {
 	if v.IsUndefined() {
