@@ -2,6 +2,7 @@ package jsutil
 
 import (
 	"fmt"
+	"strconv"
 	"syscall/js"
 	"time"
 )
@@ -80,6 +81,8 @@ func StrRecordToMap(v js.Value) map[string]string {
 	}
 	entries := ObjectClass.Call("entries", v)
 	entriesLen := entries.Get("length").Int()
+	fmt.Println("StrRecordToMap Length:" + strconv.Itoa(entriesLen))
+
 	result := make(map[string]string, entriesLen)
 	for i := 0; i < entriesLen; i++ {
 		entry := entries.Index(i)
