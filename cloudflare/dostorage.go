@@ -2,8 +2,9 @@ package cloudflare
 
 import (
 	"fmt"
-	"github.com/tinyredglasses/workers3/internal/jsutil"
 	"syscall/js"
+
+	"github.com/tinyredglasses/workers3/internal/jsutil"
 
 	"github.com/tinyredglasses/workers3/cloudflare/internal/cfruntimecontext"
 )
@@ -155,7 +156,7 @@ func (d *DurableObjectStorage) PutString(key string, value string, opts DurableO
 
 func (d *DurableObjectStorage) PutStrings(entries map[string]string, opts DurableObjectPutDeleteOptions) error {
 	val := jsutil.MapToStrRecord(entries)
-
+	fmt.Println("PutString val: " + fmt.Sprintf("%v", val))
 	p := d.instance.Call("put", val, opts.toJS())
 	_, err := jsutil.AwaitPromise(p)
 	if err != nil {
