@@ -41,7 +41,7 @@ type DurableObjectPutDeleteOptions struct {
 
 func (opts *DurableObjectStorageGetOptions) toJS(type_ string) js.Value {
 	obj := jsutil.NewObject()
-	obj.Set("type", type_)
+	// obj.Set("type", type_)
 	if opts == nil {
 		return obj
 	}
@@ -56,7 +56,7 @@ func (opts *DurableObjectStorageGetOptions) toJS(type_ string) js.Value {
 
 func (opts *DurableObjectListOptions) toJS(type_ string) js.Value {
 	obj := jsutil.NewObject()
-	obj.Set("type", type_)
+	// obj.Set("type", type_)
 	if opts == nil {
 		return obj
 	}
