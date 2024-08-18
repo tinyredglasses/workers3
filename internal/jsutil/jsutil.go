@@ -108,7 +108,7 @@ func MapToMap(v js.Value) map[string]string {
 		if next.Get("done").Bool() {
 			break
 		}
-		value := iterator.Get("value")
+		value := next.Get("value")
 		result[value.Index(0).String()] = value.Index(1).String()
 
 	}
