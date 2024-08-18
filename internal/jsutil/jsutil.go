@@ -74,6 +74,7 @@ func AwaitPromise(promiseVal js.Value) (js.Value, error) {
 
 // StrRecordToMap converts JavaScript side's Record<string, string> into map[string]string.
 func StrRecordToMap(v js.Value) map[string]string {
+	fmt.Println("StrRecordToMap:" + v.String())
 	if v.IsUndefined() || v.IsNull() {
 		return map[string]string{}
 	}
